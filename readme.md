@@ -20,6 +20,6 @@ e depois execute :
 docker-compose run app php artisan migrate --seed
 ```
 
-Entre no seu navegador  http://localhost:8080 e aplicação está rodando.
+Pronto! agora acesse http://localhost:8080 
 
 
