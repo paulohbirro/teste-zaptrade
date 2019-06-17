@@ -1,0 +1,40 @@
+# v3 syntax
+version: '3'
+
+# Named volumes
+volumes:
+
+  # MySQL Data
+  zaptrade-mysql-data:
+    driver: local
+
+  # Redis Data
+  zaptrade-redis-data:
+    driver: local
+
+services:
+  # MySQL (5.7)
+  mysql:
+    image: mysql:5.7
+    container_name: zaptrade-mysql
+    volumes:
+      - zaptrade-mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=zaptrade
+      - MYSQL_DATABASE=zaptrade
+      - MYSQL_USER=zaptrade
+      - MYSQL_PASSWORD=zaptrade
+
+  # PHP (with Nginx)
+  app:
+    image: ambientum/php:7.3-nginx
+    container_name: zaptrade-app
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "8080:8080"
+      - "8083:8083"
+    links:
+      - mysql
